@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Happy Anniversary</title>
+    <script>
+        var songs = [
+            "Alessia_Cara_-_I_Choose.mp3",
+            "song2.mp3"
+        ];
+        var currentSongIndex = 0;
+        var reasons = [
+            "1. Your smile brightens up my day.",
+            "2. You are always there for me.",
+            "3. You are very kind.",
+            "4. You held my hand when no one did.",
+            "5. Your sense of humor matches mine.",
+            "6. You are strong and independent.",
+            "7. You never doubted me once.",
+            "8. You are very patient with me.",
+            "9. You are my best friend.",
+            "10. You make every moment special."
+        ];
+        var currentReasonIndex = 0;
+
+        function updateTimer(elementId, timezoneOffset) {
+            var now = new Date();
+            var target = new Date(now.getFullYear(), now.getMonth(), 12, 0, 0, 0, 0);
+            target.setHours(target.getHours() + timezoneOffset - now.getTimezoneOffset()/60);
+            var diff = target - now;
+
+            if (diff <= 0) {
+                document.getElementById(elementId).textContent = "Happy Anniversary!";
+                return;
+            }
+
+            var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            document.getElementById(elementId).textContent = 'Countdown: ' + days + 'd ' + hours + 'h ' + minutes + 'm ' + seconds + 's ';
+        }
+
+        function playNextSong() {
+            var audio = document.getElementById("anniversarySong");
+            currentSongIndex = (currentSongIndex + 1) % songs.length;
+            audio.src = songs[currentSongIndex];
+            audio.play();
+        }
+
+        function togglePlay() {
+            var audio = document.getElementById("anniversarySong");
+            var playBtn = document.getElementById("playButton");
+            if (audio.paused) {
+                audio.play();
+                playBtn.textContent = "Pause";
+            } else {
+                audio.pause();
+                playBtn.textContent = "Play";
+            }
+        }
+
+        function cycleReasons() {
+            var reasonsDiv = document.querySelector('.reasons');
+            reasonsDiv.textContent = reasons[currentReasonIndex];
+            currentReasonIndex = (currentReasonIndex + 1) % reasons.length;
+        }
+
+        window.onload = function() {
+            setInterval(cycleReasons, 3000);
+            setInterval(function() { updateTimer('timerSaipan', 10); }, 1000); // Saipan is GMT+10
+            setInterval(function() { updateTimer('timerPakistan', 5); }, 1000); // Pakistan is GMT+5
+        };
+    </script>
+</head>
+<body>
+    <div class="clouds"></div>
+    <div class="message">Happy Anniversary!</div>
+    <img src="cat-4475583_1280.png" alt="Cute Cat" class="cat-image"> 
+    <div class="sub-message">my wife ♡</div>
+    <div id="timerSaipan" class="timer"></div> <!-- Saipan timer -->
+    <div id="timerPakistan" class="timer"></div> <!-- Pakistan timer -->
+    <div class="reasons">Top ten reasons why I love her:</div> <!-- New div for reasons -->
+    <div class="buttons-container">
+        <button id="playButton" onclick="togglePlay()">Play</button>
+        <button id="nextButton" onclick="playNextSong()">Next</button>
+    </div>
+    <audio id="anniversarySong" onended="playNextSong()">
+        <source src="Alessia_Cara_-_I_Choose.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+</body>
+</html>

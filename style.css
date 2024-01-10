@@ -1,0 +1,133 @@
+body {
+    background-color: #ffc0cb; /* A soft pink background */
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Arial', sans-serif;
+    overflow: hidden; /* Prevent scrollbars if clouds move out of view */
+}
+
+.message {
+    font-size: 3em;
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
+    z-index: 2; /* Ensure the text is above the clouds */
+    position: relative; /* Needed to establish a stacking context */
+}
+
+
+
+.sub-message {
+    font-size: 3em; /* Same size as your main message */
+    color: white; /* Same color as your main message */
+    text-shadow: 2px 2px 4px #000000; /* Same text shadow as your main message */
+    position: absolute;
+    top: 55%; /* Adjust as needed */
+    width: 100%;
+    text-align: center;
+    z-index: 2; /* Same stacking context as your main message */
+}
+
+.reasons {
+    position: absolute;
+    right: 10px; /* Adjust as needed to position the text on the right */
+    top: 50%; /* Start at 50% from the top, then adjust as needed */
+    transform: translateY(-50%); /* This will center the div vertically relative to its height */
+    max-width: 100%; /* Allows the text to use up to the full width of the page */
+    font-size: 1.5em; /* Adjust font size as needed */
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
+    z-index: 2;
+    text-align: right; /* Align text to the right within the div */
+    white-space: nowrap; /* Prevent text from wrapping to the next line */
+    overflow: hidden; /* Hide any text that overflows the div's bounds */
+    text-overflow: ellipsis; /* Add ellipsis if the text overflows the div's bounds */
+    
+}
+
+#timerSaipan {
+    position: absolute;
+    left: 10px; /* Adjust as needed to position the timer on the left */
+    top: 10%; /* Adjust as needed to position the timer above the clouds */
+    font-size: 1.2em; /* Adjust font size as needed */
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
+    z-index: 2;
+    text-align: left;
+}
+
+#timerPakistan {
+    position: absolute;
+    right: 10px; /* Adjust as needed to position the timer on the right */
+    top: 10%; /* Adjust as needed to position the timer above the clouds */
+    font-size: 1.2em; /* Adjust font size as needed */
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
+    z-index: 2;
+    text-align: right;
+}
+
+
+
+.clouds {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 150px; /* Adjust this height to fit the height of your cloud image. */
+    background: url('cloud-2421760.png') repeat-x;
+    background-size: auto 150px; /* The height should match the height set above. */
+    animation: moveClouds 60s linear infinite;
+}
+
+.cat-image {
+    position: absolute;
+    left: 10px; /* Adjust as needed to position the image on the left */
+    top: 50%; /* Start at 50% from the top, then adjust as needed */
+    transform: translateY(-50%); /* This will center the image vertically relative to its height */
+    height: auto; /* Keep the image's aspect ratio */
+    max-height: 200px; /* Adjust as needed for the size of the cat image */
+    z-index: 1; /* Ensure it is below the text */
+}
+
+#playButton, #nextButton {
+    padding: 10px 20px;
+    font-size: 1em;
+    color: #ffffff; /* White text */
+    background-color: #ffc0cb; /* Same pink as the background for the buttons */
+    border: none; /* No border */
+    border-radius: 25px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slight shadow for depth */
+    cursor: pointer;
+    margin-right: 10px; /* Add some space between the buttons */
+    z-index: 3; /* Make sure it's above other elements */
+    transition: background-color 0.3s, box-shadow 0.3s; /* Smooth transition for button press */
+}
+
+#playButton:hover, #nextButton:hover {
+    background-color: #ffb6c1; /* Lighter pink on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Larger shadow on hover */
+}
+
+#playButton:active, #nextButton:active {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Adjust shadow for depth effect */
+}
+
+.buttons-container {
+    position: absolute;
+    top: 70%; /* Adjust as needed */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3; /* Make sure it's above other elements */
+}
+
+@keyframes moveClouds {
+    from { background-position: 0 0; }
+    to { background-position: -100% 0; }
+}
+
+
+
+
