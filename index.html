@@ -66,10 +66,16 @@
             currentReasonIndex = (currentReasonIndex + 1) % reasons.length;
         }
 
+	 function setVolume(volumeLevel) {
+            var audio = document.getElementById("anniversarySong");
+            audio.volume = volumeLevel;
+        }
+
         window.onload = function() {
             setInterval(cycleReasons, 3000);
             setInterval(function() { updateTimer('timerSaipan', 10); }, 1000); // Saipan is GMT+10
             setInterval(function() { updateTimer('timerPakistan', 5); }, 1000); // Pakistan is GMT+5
+	    setVolume(0.5);
         };
     </script>
 </head>
@@ -84,6 +90,7 @@
     <div class="buttons-container">
         <button id="playButton" onclick="togglePlay()">Play</button>
         <button id="nextButton" onclick="playNextSong()">Next</button>
+	<input type="range" id="volumeControl" min="0" max="1" step="0.01" value="0.5" oninput="setVolume(this.value)">
     </div>
     <audio id="anniversarySong" onended="playNextSong()">
         <source src="Alessia_Cara_-_I_Choose.mp3" type="audio/mpeg">
