@@ -154,6 +154,23 @@ body {
     box-shadow: 0 0 4px #000000; /* Shadow for depth */
 }
 
+.daily-message {
+    position: absolute;
+    top: calc(50% - 1.5em); /* Adjust this to move it just above the 'Happy Anniversary' */
+    left: 50%;
+    transform: translate(-50%, -100%); /* Adjust vertical centering */
+    font-size: 2em; /* Make the font size similar or slightly smaller than 'Happy Anniversary' */
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
+    z-index: 3; /* Above the 'Happy Anniversary' text */
+    text-align: center;
+    max-width: 100%; /* Full width to ensure text stays on one line */
+    white-space: nowrap; /* Keep the text on a single line */
+    overflow: hidden; /* Hide overflow */
+    text-overflow: ellipsis; /* Add an ellipsis if the text is too long */
+}
+
+
 
 .buttons-container {
     position: absolute;
