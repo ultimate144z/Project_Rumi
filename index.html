@@ -72,8 +72,29 @@
             audio.volume = volumeLevel;
         }
 
+        var dailyMessages = [
+            "You are loved and adored <3",
+            "Message for Day 2",
+            // ... up to 20 messages
+        ];
+
+        function displayDailyMessage() {
+            var startDate = new Date("2024-01-11"); // Set your start date in format YYYY-MM-DD
+            var today = new Date();
+            var differenceInTime = today - startDate;
+            var differenceInDays = Math.floor(differenceInTime / (1000 * 3600 * 24));
+
+            if (differenceInDays >= 0 && differenceInDays < dailyMessages.length) {
+                document.getElementById("dailyMessage").textContent = dailyMessages[differenceInDays];
+            } else {
+                // If the difference in days is outside the range of your messages
+                document.getElementById("dailyMessage").textContent = "No message for today.";
+            }
+        }
+
         window.onload = function() {
             setInterval(cycleReasons, 3000);
+	    displayDailyMessage();
             setInterval(function() { updateTimer('timerSaipan', 10); }, 1000); // Saipan is GMT+10
             setInterval(function() { updateTimer('timerPakistan', 5); }, 1000); // Pakistan is GMT+5
 	    setVolume(0.5);
@@ -88,6 +109,7 @@
     <div id="timerSaipan" class="timer"></div> <!-- Saipan timer -->
     <div id="timerPakistan" class="timer"></div> <!-- Pakistan timer -->
     <div class="reasons">Top ten reasons why I love her:</div> <!-- New div for reasons -->
+    <div id="dailyMessage" class="daily-message"></div>
     <div class="buttons-container">
         <button id="playButton" onclick="togglePlay()">Play</button>
         <button id="nextButton" onclick="playNextSong()">Next</button>
