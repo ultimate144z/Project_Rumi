@@ -9,7 +9,6 @@
             "song2.mp3",
 	    "song3.mp3",
 	    "song4.mp3",
-	    "song5.mp3",
 	    "song6.mp3"
         ];
         var currentSongIndex = 0;
@@ -27,23 +26,23 @@
         ];
         var currentReasonIndex = 0;
 
-        function updateTimer(elementId, timezoneOffset) {
-            var now = new Date();
-            var target = new Date(now.getFullYear(), now.getMonth(), 12, 0, 0, 0, 0);
-            target.setHours(target.getHours() + timezoneOffset - now.getTimezoneOffset()/60);
-            var diff = target - now;
+        function updateTimer(elementId, timezoneOffset, targetDate) {
+    	   var now = new Date();
+    	   var target = new Date(targetDate);
+           target.setHours(target.getHours() + timezoneOffset - now.getTimezoneOffset() / 60);
+           var diff = target - now;
 
-            if (diff <= 0) {
-                document.getElementById(elementId).textContent = "Happy Anniversary!";
-                return;
-            }
+           if (diff <= 0) {
+           document.getElementById(elementId).textContent = "Happy Anniversary!";
+           return;
+         }
 
-            var days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((diff % (1000 * 60)) / 1000);
-            document.getElementById(elementId).textContent = 'Countdown: ' + days + 'd ' + hours + 'h ' + minutes + 'm ' + seconds + 's ';
-        }
+          var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+          var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+          var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+          document.getElementById(elementId).textContent = 'Countdown: ' + days + 'd ' + hours + 'h ' + minutes + 'm ' + seconds + 's ';
+}
 
         function playNextSong() {
             var audio = document.getElementById("anniversarySong");
@@ -70,6 +69,13 @@
             currentReasonIndex = (currentReasonIndex + 1) % reasons.length;
         }
 
+	function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+    }
+}
+
 	 function setVolume(volumeLevel) {
             var audio = document.getElementById("anniversarySong");
             audio.volume = volumeLevel;
@@ -82,34 +88,47 @@
 	    "You are irreplaceable",
             "Hey, gorgeous! Never leaving you <3",
 	    "My special girl <3:",
-	    "I will be by your side",
-	     "You are worth everything",
-	    "You are my sunshine",
-	     "You are perfectly created"
+	    "I will be by your side"
             // ... up to 20 messages
         ];
 
-        function displayDailyMessage() {
-            var startDate = new Date("2024-01-11"); // Set your start date in format YYYY-MM-DD
-            var today = new Date();
-            var differenceInTime = today - startDate;
-            var differenceInDays = Math.floor(differenceInTime / (1000 * 3600 * 24));
+function displayDailyMessage() {
+    // Set the start date to today's date for the messages to start appearing from today
+    var startDate = new Date("2024-02-04T00:00:00+10:00"); // Adjusted to February 4th, 2024
 
-            if (differenceInDays >= 0 && differenceInDays < dailyMessages.length) {
-                document.getElementById("dailyMessage").textContent = dailyMessages[differenceInDays];
-            } else {
-                // If the difference in days is outside the range of your messages
-                document.getElementById("dailyMessage").textContent = "No message for today.";
-            }
-        }
+    // Calculate today's date in Saipan's time zone
+    var todaySaipan = new Date(new Date().toLocaleString("en-US", {timeZone: "Pacific/Saipan"}));
 
-        window.onload = function() {
-            setInterval(cycleReasons, 3000);
-	    displayDailyMessage();
-            setInterval(function() { updateTimer('timerSaipan', 10); }, 1000); // Saipan is GMT+10
-            setInterval(function() { updateTimer('timerPakistan', 5); }, 1000); // Pakistan is GMT+5
-	    setVolume(0.5);
-        };
+    // Calculate the difference in days
+    var differenceInTime = todaySaipan - startDate;
+    var differenceInDays = Math.floor(differenceInTime / (1000 * 3600 * 24));
+
+    if (differenceInDays >= 0 && differenceInDays < dailyMessages.length) {
+        document.getElementById("dailyMessage").textContent = dailyMessages[differenceInDays];
+    } else {
+        // If the day is beyond the range of predefined messages
+        document.getElementById("dailyMessage").textContent = "No message for today.";
+    }
+}
+
+
+window.onload = function() {
+    shuffleArray(songs); // Shuffle songs array
+    
+    // Select a random song to play initially
+    var randomSongIndex = Math.floor(Math.random() * songs.length);
+    document.getElementById("anniversarySong").src = songs[randomSongIndex];
+    document.getElementById("anniversarySong").play(); // Optionally, start playing the randomly selected song
+
+    // The rest of your onload code
+    displayDailyMessage(); // Display the daily message
+    setInterval(cycleReasons, 3000);
+    setInterval(function() { updateTimer('timerSaipan', 10, '2024-02-12T00:00:00'); }, 1000);
+    setInterval(function() { updateTimer('timerPakistan', 5, '2024-02-12T00:00:00'); }, 1000);
+    setVolume(0.5);
+};
+
+
     </script>
 </head>
 <body>
@@ -119,6 +138,17 @@
     <div class="sub-message">my wife ♡</div>
     <div id="timerSaipan" class="timer"></div> <!-- Saipan timer -->
     <div id="timerPakistan" class="timer"></div> <!-- Pakistan timer -->
+
+<!-- Navigation Links -->
+<nav class="navigation">
+    <ul>
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <!-- Updated to open in a new tab -->
+        <li><a href="game.html" class="nav-link" target="_blank">Game</a></li>
+        <li><a href="reasons.html" class="nav-link">Reasons</a></li>
+    </ul>
+</nav>
+
     <div class="reasons">Top ten reasons why I love her:</div> <!-- New div for reasons -->
     <div id="dailyMessage" class="daily-message"></div>
     <div class="buttons-container">
