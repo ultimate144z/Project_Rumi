@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Happy Anniversary</title>
+</head>
+<body>
+    <div class="game-container">
+        <h2>Guess the Number Game</h2>
+        <p>I'm thinking of a number between 1 and 100. Can you guess it?</p>
+        <input type="number" id="guessInput" placeholder="Enter your guess..." min="1" max="100">
+        <button onclick="checkGuess()">Guess</button>
+        <p id="gameResult"></p>
+    </div>
+
+    <script>
+        var secretNumber = Math.floor(Math.random() * 100) + 1;
+        function checkGuess() {
+            var userGuess = document.getElementById('guessInput').value;
+            var resultText = '';
+            if (userGuess == secretNumber) {
+                resultText = 'Congratulations! You guessed it right!';
+            } else if (userGuess < secretNumber) {
+                resultText = 'Too low. Try again!';
+            } else {
+                resultText = 'Too high. Try again!';
+            }
+            document.getElementById('gameResult').textContent = resultText;
+        }
+    </script>
+
+    <!-- Navigation Links -->
+    <nav class="navigation">
+        <ul>
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="game.html" class="nav-link">Game</a></li>
+            <li><a href="reasons.html" class="nav-link">Reasons</a></li>
+        </ul>
+    </nav>
+</body>
+</html>
