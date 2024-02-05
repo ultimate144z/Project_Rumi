@@ -5,21 +5,34 @@
     <title>Happy Anniversary</title>
 </head>
 <body>
+    <div class="clouds"></div>
+    <img src="cat-4475583_1280.png" alt="Cute Cat" class="cat-image"> <!-- Cat image added -->
+    <div id="timerSaipan" class="timer">Countdown Saipan: Loading...</div>
+    <div id="timerPakistan" class="timer">Countdown Pakistan: Loading...</div>
     <div class="game-container">
         <h2>Guess the Number Game</h2>
         <p>I'm thinking of a number between 1 and 100. Can you guess it?</p>
         <input type="number" id="guessInput" placeholder="Enter your guess..." min="1" max="100">
         <button onclick="checkGuess()">Guess</button>
         <p id="gameResult"></p>
+        <div class="score-container">
+            <p>Score: <span id="score">0</span></p>
+            <button onclick="resetGame()">Reset Game</button>
+        </div>
     </div>
 
     <script>
         var secretNumber = Math.floor(Math.random() * 100) + 1;
+        var score = 0;
+
         function checkGuess() {
             var userGuess = document.getElementById('guessInput').value;
             var resultText = '';
             if (userGuess == secretNumber) {
                 resultText = 'Congratulations! You guessed it right!';
+                score++;
+                document.getElementById('score').textContent = score;
+                secretNumber = Math.floor(Math.random() * 100) + 1; // Reset secret number
             } else if (userGuess < secretNumber) {
                 resultText = 'Too low. Try again!';
             } else {
@@ -27,6 +40,38 @@
             }
             document.getElementById('gameResult').textContent = resultText;
         }
+
+        function resetGame() {
+            score = 0;
+            document.getElementById('score').textContent = score;
+            secretNumber = Math.floor(Math.random() * 100) + 1;
+            document.getElementById('gameResult').textContent = '';
+            document.getElementById('guessInput').value = '';
+        }
+
+        // Update Timer function similar to index.html
+        function updateTimer(elementId, timezoneOffset, targetDate) {
+            var now = new Date();
+            var target = new Date(targetDate);
+            target.setHours(target.getHours() + timezoneOffset - now.getTimezoneOffset() / 60);
+            var diff = target - now;
+
+            if (diff <= 0) {
+                document.getElementById(elementId).textContent = "Happy Anniversary!";
+                return;
+            }
+
+            var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            document.getElementById(elementId).textContent = 'Countdown: ' + days + 'd ' + hours + 'h ' + minutes + 'm ' + seconds + 's ';
+        }
+
+        window.onload = function() {
+            setInterval(function() { updateTimer('timerSaipan', 10, '2024-02-12T00:00:00'); }, 1000);
+            setInterval(function() { updateTimer('timerPakistan', 5, '2024-02-12T00:00:00'); }, 1000);
+        };
     </script>
 
     <!-- Navigation Links -->
